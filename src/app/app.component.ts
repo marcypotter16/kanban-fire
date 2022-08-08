@@ -24,25 +24,26 @@ export class AppComponent  {
   inProgress: Task[] = []
   done:       Task[] = []
 
-  editTask( list: 'done' | 'todo' | 'inProgress', task: Task ) : void {
+  editTask(list: 'done' | 'todo' | 'inProgress', task: Task): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       width: '270px',
       data: {
         task,
-        enableDelete: true
+        enableDelete: true,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result: TaskDialogResult|undefined) => {
+      if (!result) {
+        return;
       }
-    })
-    dialogRef.afterClosed()
-      .subscribe(( result: TaskDialogResult | undefined ) => {
-        if ( !result )
-          return
-        const dataList = this[list]
-        const taskIndex = dataList.indexOf(task)
-        if ( result.delete )
-          dataList.splice(taskIndex, 1)
-        else
-          dataList[taskIndex] = task
-    })
+      const dataList = this[list];
+      const taskIndex = dataList.indexOf(task);
+      if (result.delete) {
+        dataList.splice(taskIndex, 1);
+      } else {
+        dataList[taskIndex] = task;
+      }
+    });
   }
 
   drop( event: CdkDragDrop<Task[] | null> ) : void {
