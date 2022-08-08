@@ -41,12 +41,21 @@ mat-form-field {
   border: solid 1px black;
 }
 
-.cdk-drag-animation {
+.cdk-drag-animating {
   transition: transform 250ms;
 }
 
 .cdk-drag-placeholder {
   opacity: 0;
+}
+
+:host {
+  display: block;
+}
+
+.item {
+  margin-bottom: 10px;
+  cursor: pointer;
 }
 
 span {
